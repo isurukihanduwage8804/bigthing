@@ -3,97 +3,71 @@ import requests
 from PIL import Image
 from io import BytesIO
 
-# පින්තූර පූරණය කරන ශ්‍රිතය (Function)
-def load_img(url):
+# පින්තූර පූරණය කරන සරල Function එකක්
+def get_img(url):
     try:
-        response = requests.get(url, timeout=10)
-        img = Image.open(BytesIO(response.content))
-        return img
+        res = requests.get(url, timeout=10)
+        return Image.open(BytesIO(res.content))
     except:
         return None
 
-# App සැකසුම්
-st.set_page_config(layout="wide", page_title="ලෝකයේ අරුම පුදුම තැන්")
+st.set_page_config(layout="wide", page_title="World Wonders")
+st.title("🌍 ලෝකයේ අරුම පුදුම තැන්")
 
-st.markdown("<h1 style='text-align: center; color: #2F80ED;'>🌍 ලෝකයේ අරුම පුදුම තැන්</h1>", unsafe_allow_html=True)
+# Tab පහක් හදමු
+t1, t2, t3, t4, t5 = st.tabs(["⛰️ කඳු", "🌊 දිය ඇලි", "🗺️ රටවල්", "🌋 ගිනිකඳු", "🏞️ ගංගා"])
 
-# Tabs මගින් වර්ගීකරණය
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["⛰️ කඳු", "🌊 දිය ඇලි", "🗺️ රටවල්", "🌋 ගිනිකඳු", "🏞️ ගංගා"])
+# 1. කඳු
+with t1:
+    st.header("ලෝකයේ උසම කඳු")
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        img = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Mount_Everest_from_Kala_Patthar_-_October_2015.jpg/640px-Mount_Everest_from_Kala_Patthar_-_October_2015.jpg")
+        if img: st.image(img)
+    with col2:
+        st.subheader("1. මවුන්ට් එවරස්ට් (8,848m)")
+        st.write("නේපාලය සහ චීනය අතර පිහිටා ඇත.")
 
-# --- 1. කඳු ---
-with tab1:
-    st.header("⛰️ ලෝකයේ උසම කඳු 10")
-    items = [
-        ("මවුන්ට් එවරස්ට්", "8,848m", "නේපාලය/චීනය", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Mount_Everest_from_Kala_Patthar_-_October_2015.jpg/640px-Mount_Everest_from_Kala_Patthar_-_October_2015.jpg"),
-        ("K2", "8,611m", "පාකිස්තානය/චීනය", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/K2_from_Concordia_Pakistan.jpg/640px-K2_from_Concordia_Pakistan.jpg")
-    ]
-    for name, h, loc, url in items:
-        col1, col2 = st.columns([1, 2])
-        img = load_img(url)
-        with col1:
-            if img: st.image(img)
-            else: st.warning("පින්තූරය පූරණය කළ නොහැක")
-        with col2:
-            st.subheader(name)
-            st.write(f"උස: {h} | පිහිටීම: {loc}")
-        st.divider()
+# 2. දිය ඇලි
+with t2:
+    st.header("ලෝකයේ උසම දිය ඇලි")
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        img = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Salto_Angel-Canaima-Venezuela08.JPG/640px-Salto_Angel-Canaima-Venezuela08.JPG")
+        if img: st.image(img)
+    with col2:
+        st.subheader("1. ඒන්ජල් ෆෝල්ස් (979m)")
+        st.write("වෙනිසියුලාවේ පිහිටා ඇත.")
 
-# --- 2. දිය ඇලි ---
-with tab2:
-    st.header("🌊 ලෝකයේ උසම දිය ඇලි 10")
-    falls = [
-        ("ඒන්ජල් ෆෝල්ස්", "979m", "වෙනිසියුලාව", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Salto_Angel-Canaima-Venezuela08.JPG/640px-Salto_Angel-Canaima-Venezuela08.JPG")
-    ]
-    for name, h, loc, url in falls:
-        col1, col2 = st.columns([1, 2])
-        img = load_img(url)
-        with col1:
-            if img: st.image(img)
-        with col2:
-            st.subheader(name)
-            st.write(f"උස: {h} | පිහිටීම: {loc}")
+# 3. රටවල්
+with t3:
+    st.header("විශාලතම රටවල්")
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        img = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Flag_of_Russia.svg/640px-Flag_of_Russia.svg.png")
+        if img: st.image(img, width=300)
+    with col2:
+        st.subheader("1. රුසියාව (17,098,242 km²)")
+        st.write("ලෝකයේ විශාලතම රටයි.")
 
-# --- 3. රටවල් ---
-with tab3:
-    st.header("🗺️ ලෝකයේ විශාලතම රටවල් 10")
-    countries = [
-        ("රුසියාව", "17,098,242 km²", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Flag_of_Russia.svg/640px-Flag_of_Russia.svg.png")
-    ]
-    for name, area, url in countries:
-        col1, col2 = st.columns([1, 2])
-        img = load_img(url)
-        with col1:
-            if img: st.image(img, width=300)
-        with col2:
-            st.subheader(name)
-            st.write(f"වර්ග ප්‍රමාණය: {area}")
+# 4. ගිනිකඳු
+with t4:
+    st.header("විශාලතම ගිනිකඳු")
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        img = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Mauna_Loa_summit_caldera.jpg/640px-Mauna_Loa_summit_caldera.jpg")
+        if img: st.image(img)
+    with col2:
+        st.subheader("1. මාඋනා ලෝවා")
+        st.write("හවායි හි පිහිටා ඇත.")
 
-# --- 4. ගිනිකඳු ---
-with tab4:
-    st.header("🌋 ලෝකයේ විශාලතම ගිනිකඳු 10")
-    volcanoes = [
-        ("මාඋනා ලෝවා", "හවායි, ඇමරිකාව", "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Mauna_Loa_summit_caldera.jpg/640px-Mauna_Loa_summit_caldera.jpg")
-    ]
-    for name, loc, url in volcanoes:
-        col1, col2 = st.columns([1, 2])
-        img = load_img(url)
-        with col1:
-            if img: st.image(img)
-        with col2:
-            st.subheader(name)
-            st.write(f"පිහිටීම: {loc}")
-
-# --- 5. ගංගා ---
-with tab5:
-    st.header("🏞️ ලෝකයේ දිගම ගංගා 10")
-    rivers = [
-        ("නයිල් ගංගාව", "6,650 km", "අප්‍රිකාව", "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Luxor_and_Nile.jpg/640px-Luxor_and_Nile.jpg")
-    ]
-    for name, d, loc, url in rivers:
-        col1, col2 = st.columns([1, 2])
-        img = load_img(url)
-        with col1:
-            if img: st.image(img)
-        with col2:
-            st.subheader(name)
-            st.write(f"දිග: {d} | පිහිටීම: {loc}")
+# 5. ගංගා
+with t5:
+    st.header("ලෝකයේ දිගම ගංගා")
+    col1, col2 = st.columns([1, 2])
+    with col1:
+        img = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Luxor_and_Nile.jpg/640px-Luxor_and_Nile.jpg")
+        if img: st.image(img)
+    with col2:
+        st.subheader("1. නයිල් ගංගාව (6,650 km)")
+        st.write("අප්‍රිකා මහද්වීපයේ පිහිටා ඇත.")
