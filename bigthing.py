@@ -3,61 +3,46 @@ import requests
 from PIL import Image
 from io import BytesIO
 
-# --- පින්තූර ලබාගන්නා ආකාරය වැඩිදියුණු කිරීම ---
+# --- පින්තූර Load කරන Function එක ---
 def get_img(url):
     try:
-        # User-agent එකක් එකතු කිරීමෙන් Wikipedia බාධාවන් මගහැරිය හැක
         headers = {'User-Agent': 'Mozilla/5.0'}
-        res = requests.get(url, headers=headers, timeout=15)
-        if res.status_code == 200:
-            return Image.open(BytesIO(res.content))
-        return None
+        res = requests.get(url, headers=headers, timeout=10)
+        return Image.open(BytesIO(res.content))
     except:
         return None
 
-# පේජ් එකේ සැකසුම්
-st.set_page_config(layout="wide", page_title="World Top 10 Wonders")
+st.set_page_config(layout="wide", page_title="World Wonders")
+st.title("🌍 ලෝකයේ අරුම පුදුම දෑ")
 
-st.markdown("<h1 style='text-align: center; color: #FF4B4B;'>🌍 ලෝකයේ අරුම පුදුම තැන්</h1>", unsafe_allow_html=True)
-
-# Tabs මගින් වර්ගීකරණය
+# Tab 5ක් හදමු
 t1, t2, t3, t4, t5 = st.tabs(["⛰️ කඳු", "🌊 දිය ඇලි", "🗺️ රටවල්", "🌋 ගිනිකඳු", "🏞️ ගංගා"])
 
-# --- 1. කඳු ---
 with t1:
-    st.header("⛰️ ලෝකයේ උසම කඳු 10")
-    col1, col2 = st.columns([1, 1])
-    with col1:
-        img = get_img("https://images.unsplash.com/photo-1544633038-3513bd478644?q=80&w=640")
-        if img: st.image(img, caption="මවුන්ට් එවරස්ට් (Mount Everest)")
-        else: st.info("පින්තූරය පූරණය වෙමින් පවතී හෝ සබැඳිය අවිරුද්ධයි.")
-    with col2:
-        st.subheader("1. මවුන්ට් එවරස්ට් (8,848m)")
-        st.write("හිමාල කඳු වැටියේ පිහිටා ඇති මෙය ලෝකයේ උසම ස්ථානයයි.")
+    st.header("⛰️ ලෝකයේ උසම කඳු")
+    img1 = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Mount_Everest_from_Kala_Patthar_-_October_2015.jpg/640px-Mount_Everest_from_Kala_Patthar_-_October_2015.jpg")
+    if img1: st.image(img1, caption="මවුන්ට් එවරස්ට්")
+    st.write("උස: 8,848m | නේපාලය")
 
-# --- 2. දිය ඇලි ---
 with t2:
-    st.header("🌊 ලෝකයේ උසම දිය ඇලි 10")
-    img = get_img("https://images.unsplash.com/photo-1611029177113-177699966144?q=80&w=640")
-    if img: st.image(img, width=600, caption="ඒන්ජල් ෆෝල්ස් (Angel Falls)")
-    st.subheader("1. ඒන්ජල් ෆෝල්ස් (979m)")
-    st.write("වෙනිසියුලාවේ පිහිටා ඇති ලෝකයේ උසම දිය ඇල්ලයි.")
+    st.header("🌊 ලෝකයේ උසම දිය ඇලි")
+    img2 = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Salto_Angel-Canaima-Venezuela08.JPG/640px-Salto_Angel-Canaima-Venezuela08.JPG")
+    if img2: st.image(img2, caption="ඒන්ජල් ෆෝල්ස්")
+    st.write("උස: 979m | වෙනිසියුලාව")
 
-# --- 3. රටවල් ---
 with t3:
-    st.header("🗺️ විශාලතම රටවල් 10")
-    st.subheader("1. රුසියාව (17,098,242 km²)")
-    st.write("ලෝකයේ භූමි ප්‍රමාණයෙන් විශාලතම රටයි.")
-    st.info("ධජය පූරණය වීමට තත්පර කිහිපයක් රැඳී සිටින්න.")
+    st.header("🗺️ විශාලතම රටවල්")
+    img3 = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Flag_of_Russia.svg/640px-Flag_of_Russia.svg.png")
+    if img3: st.image(img3, width=300)
+    st.write("රුසියාව (17,098,242 km²)")
 
-# --- 4. ගිනිකඳු ---
 with t4:
-    st.header("🌋 විශාලතම ගිනිකඳු 10")
-    st.subheader("1. මාඋනා ලෝවා (Mauna Loa)")
-    st.write("හවායි හි පිහිටි ලෝකයේ විශාලතම ක්‍රියාකාරී ගිනිකන්දයි.")
+    st.header("🌋 විශාලතම ගිනිකඳු")
+    img4 = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Mauna_Loa_summit_caldera.jpg/640px-Mauna_Loa_summit_caldera.jpg")
+    if img4: st.image(img4, caption="මාඋනා ලෝවා")
+    st.write("හවායි හි පිහිටා ඇත.")
 
-# --- 5. ගංගා ---
 with t5:
-    st.header("🏞️ ලෝකයේ දිගම ගංගා 10")
-    st.subheader("1. නයිල් ගංගාව (Nile)")
-    st.write("අප්‍රිකාවේ පිහිටි දිගම ගංගාවයි (6,650 km).")
+    st.header("🏞️ ලෝකයේ දිගම ගංගා")
+    img5 = get_img("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Luxor_and_Nile.jpg/640px-Luxor_and_Nile.jpg")
+    if img5: st.image
